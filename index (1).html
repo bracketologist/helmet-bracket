@@ -22,8 +22,8 @@ body{background:#0a0a0f;color:#f0f0f0;font-family:'Inter',sans-serif;min-height:
 .team-card{flex:1;background:#12121a;border:1px solid #1e1e2a;border-radius:14px;padding:1.5rem 1rem;display:flex;flex-direction:column;align-items:center;gap:.75rem;cursor:pointer;transition:border-color .2s,transform .2s,background .2s;-webkit-tap-highlight-color:transparent}
 .team-card:hover{border-color:#c8a84b;transform:translateY(-4px);background:#16161f}
 .team-card:active{transform:scale(.97)}
-.helmet-emoji{font-size:3.5rem;transition:transform .25s;line-height:1}
-.team-card:hover .helmet-emoji{transform:scale(1.1) rotate(-5deg)}
+.helmet-img{width:120px;height:120px;object-fit:contain;transition:transform .25s}
+.team-card:hover .helmet-img{transform:scale(1.08) rotate(-3deg)}
 .team-name{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:1px;color:#f0f0f0;text-align:center}
 .team-conf{font-size:.6rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#444}
 .vs-divider{display:flex;flex-direction:column;align-items:center;gap:.4rem;flex-shrink:0}
@@ -34,7 +34,6 @@ body{background:#0a0a0f;color:#f0f0f0;font-family:'Inter',sans-serif;min-height:
 .winner-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 2rem;text-align:center;gap:1.2rem}
 .winner-title{font-size:.75rem;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#c8a84b}
 .winner-name{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:#fff;line-height:1}
-.winner-helmet{font-size:5rem}
 .restart-btn{background:#c8a84b;color:#0a0a0f;border:none;border-radius:8px;padding:.8rem 2.2rem;font-weight:700;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:.5rem}
 .restart-btn:hover{background:#e8c86b;transform:translateY(-2px)}
 .history-section{max-width:640px;width:100%;margin-top:1.5rem}
@@ -52,39 +51,41 @@ footer{padding:.75rem;text-align:center;font-size:.6rem;color:#2a2a2a;border-top
 const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1EMDk0t4ArauYIA4-84MHO51t8KNyxHIoyo6leE9nPkk/formResponse";
 const GOOGLE_ENTRY_ID = "entry.1560728561";
 
-const TEAMS=[
-  {id:"chiefs",name:"Chiefs",conf:"AFC West",e:"🏈"},
-  {id:"bills",name:"Bills",conf:"AFC East",e:"🦬"},
-  {id:"eagles",name:"Eagles",conf:"NFC East",e:"🦅"},
-  {id:"49ers",name:"49ers",conf:"NFC West",e:"⭐"},
-  {id:"ravens",name:"Ravens",conf:"AFC North",e:"🪶"},
-  {id:"dolphins",name:"Dolphins",conf:"AFC East",e:"🐬"},
-  {id:"cowboys",name:"Cowboys",conf:"NFC East",e:"✭"},
-  {id:"lions",name:"Lions",conf:"NFC North",e:"🦁"},
-  {id:"bengals",name:"Bengals",conf:"AFC North",e:"🐅"},
-  {id:"steelers",name:"Steelers",conf:"AFC North",e:"⚙️"},
-  {id:"browns",name:"Browns",conf:"AFC North",e:"🐾"},
-  {id:"texans",name:"Texans",conf:"AFC South",e:"🤠"},
-  {id:"colts",name:"Colts",conf:"AFC South",e:"🐎"},
-  {id:"jaguars",name:"Jaguars",conf:"AFC South",e:"🐆"},
-  {id:"titans",name:"Titans",conf:"AFC South",e:"⚡"},
-  {id:"broncos",name:"Broncos",conf:"AFC West",e:"🐴"},
-  {id:"raiders",name:"Raiders",conf:"AFC West",e:"☠️"},
-  {id:"chargers",name:"Chargers",conf:"AFC West",e:"⚡"},
-  {id:"patriots",name:"Patriots",conf:"AFC East",e:"🎖️"},
-  {id:"jets",name:"Jets",conf:"AFC East",e:"✈️"},
-  {id:"packers",name:"Packers",conf:"NFC North",e:"🧀"},
-  {id:"bears",name:"Bears",conf:"NFC North",e:"🐻"},
-  {id:"vikings",name:"Vikings",conf:"NFC North",e:"⚔️"},
-  {id:"falcons",name:"Falcons",conf:"NFC South",e:"🦅"},
-  {id:"saints",name:"Saints",conf:"NFC South",e:"⚜️"},
-  {id:"buccaneers",name:"Buccaneers",conf:"NFC South",e:"🏴‍☠️"},
-  {id:"panthers",name:"Panthers",conf:"NFC South",e:"🐾"},
-  {id:"cardinals",name:"Cardinals",conf:"NFC West",e:"🐦"},
-  {id:"seahawks",name:"Seahawks",conf:"NFC West",e:"🦅"},
-  {id:"rams",name:"Rams",conf:"NFC West",e:"🐏"},
-  {id:"commanders",name:"Commanders",conf:"NFC East",e:"⚔️"},
-  {id:"giants",name:"Giants",conf:"NFC East",e:"🗽"}
+const IMG = "images/";
+
+const TEAMS = [
+  {id:"chiefs",     name:"Chiefs",      conf:"AFC West",  img:IMG+"chiefs.avif"},
+  {id:"bills",      name:"Bills",       conf:"AFC East",  img:IMG+"bills.jpg"},
+  {id:"eagles",     name:"Eagles",      conf:"NFC East",  img:IMG+"eagles.avif"},
+  {id:"49ers",      name:"49ers",       conf:"NFC West",  img:IMG+"49ers.avif"},
+  {id:"ravens",     name:"Ravens",      conf:"AFC North", img:IMG+"ravens.avif"},
+  {id:"dolphins",   name:"Dolphins",    conf:"AFC East",  img:IMG+"dolphins.avif"},
+  {id:"cowboys",    name:"Cowboys",     conf:"NFC East",  img:IMG+"cowboys.avif"},
+  {id:"lions",      name:"Lions",       conf:"NFC North", img:IMG+"lions.avif"},
+  {id:"bengals",    name:"Bengals",     conf:"AFC North", img:IMG+"bengals.avif"},
+  {id:"steelers",   name:"Steelers",    conf:"AFC North", img:IMG+"steelers.avif"},
+  {id:"browns",     name:"Browns",      conf:"AFC North", img:IMG+"browns.avif"},
+  {id:"texans",     name:"Texans",      conf:"AFC South", img:IMG+"texans.avif"},
+  {id:"colts",      name:"Colts",       conf:"AFC South", img:IMG+"colts.jpeg"},
+  {id:"jaguars",    name:"Jaguars",     conf:"AFC South", img:IMG+"jaguars.avif"},
+  {id:"titans",     name:"Titans",      conf:"AFC South", img:IMG+"titans.avif"},
+  {id:"broncos",    name:"Broncos",     conf:"AFC West",  img:IMG+"broncos.avif"},
+  {id:"raiders",    name:"Raiders",     conf:"AFC West",  img:IMG+"raiders.jpeg"},
+  {id:"chargers",   name:"Chargers",    conf:"AFC West",  img:IMG+"chargers.avif"},
+  {id:"patriots",   name:"Patriots",    conf:"AFC East",  img:IMG+"patriots.jpg"},
+  {id:"jets",       name:"Jets",        conf:"AFC East",  img:IMG+"jets.avif"},
+  {id:"packers",    name:"Packers",     conf:"NFC North", img:IMG+"packers.avif"},
+  {id:"bears",      name:"Bears",       conf:"NFC North", img:IMG+"bears.jpg"},
+  {id:"vikings",    name:"Vikings",     conf:"NFC North", img:IMG+"vikings.avif"},
+  {id:"falcons",    name:"Falcons",     conf:"NFC South", img:IMG+"falcons.webp"},
+  {id:"saints",     name:"Saints",      conf:"NFC South", img:IMG+"saints.jpg"},
+  {id:"buccaneers", name:"Buccaneers",  conf:"NFC South", img:IMG+"buccaneers.avif"},
+  {id:"panthers",   name:"Panthers",    conf:"NFC South", img:IMG+"panthers.jpg"},
+  {id:"cardinals",  name:"Cardinals",   conf:"NFC West",  img:IMG+"cardinals.avif"},
+  {id:"seahawks",   name:"Seahawks",    conf:"NFC West",  img:IMG+"seahawks.avif"},
+  {id:"rams",       name:"Rams",        conf:"NFC West",  img:IMG+"rams.avif"},
+  {id:"commanders", name:"Commanders",  conf:"NFC East",  img:IMG+"commanders.png"},
+  {id:"giants",     name:"Giants",      conf:"NFC East",  img:IMG+"giants.avif"},
 ];
 
 const ROUND_NAMES=["Round of 32","Round of 16","Quarterfinals","Semifinals","Championship"];
@@ -92,17 +93,15 @@ const ROUND_NAMES=["Round of 32","Round of 16","Quarterfinals","Semifinals","Cha
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]]}return b}
 function pairs(a){const r=[];for(let i=0;i<a.length;i+=2)r.push([a[i],a[i+1]]);return r}
 
+function helmetImg(team,size=120){
+  return `<img class="helmet-img" src="${team.img}" alt="${team.name} helmet" style="width:${size}px;height:${size}px" onerror="this.replaceWith(Object.assign(document.createElement('div'),{textContent:'🏈',style:'font-size:${Math.round(size*.5)}px;width:${size}px;height:${size}px;display:flex;align-items:center;justify-content:center'}))">`;
+}
+
 function submitToGoogleForms(data){
   try{
     const body=new URLSearchParams();
-    body.append(GOOGLE_ENTRY_ID, JSON.stringify(data));
-    // Use no-cors so the request fires without CORS errors (response is opaque, that's fine)
-    fetch(GOOGLE_FORM_ACTION, {
-      method:"POST",
-      mode:"no-cors",
-      headers:{"Content-Type":"application/x-www-form-urlencoded"},
-      body:body.toString()
-    });
+    body.append(GOOGLE_ENTRY_ID,JSON.stringify(data));
+    fetch(GOOGLE_FORM_ACTION,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:body.toString()});
   }catch(e){}
 }
 
@@ -127,8 +126,7 @@ class BracketApp{
     const slots=[];
     slots[0]=this.matchups.map(([a,b])=>({team1:a,team2:b,winner:null}));
     for(let r=1;r<=4;r++){
-      const cnt=Math.pow(2,4-r);
-      slots[r]=Array.from({length:cnt},()=>({team1:null,team2:null,winner:null}));
+      slots[r]=Array.from({length:Math.pow(2,4-r)},()=>({team1:null,team2:null,winner:null}));
     }
     return slots;
   }
@@ -140,7 +138,6 @@ class BracketApp{
     const newWinners=[...this.roundWinners,winner];
     this.bracketSlots[this.roundNum][this.matchIdx].winner=winner;
     this.selHistory[rk]=[...(this.selHistory[rk]||[]),winner.name];
-
     if(this.matchIdx+1<this.matchups.length){
       this.roundWinners=newWinners;
       this.matchIdx++;
@@ -151,100 +148,60 @@ class BracketApp{
         this.champion=newWinners[0];
         this.selHistory.champion=this.champion.name;
         this.selHistory.completed_at=new Date().toISOString();
-        if(!this.submitted){
-          this.submitted=true;
-          submitToGoogleForms(this.selHistory);
-        }
+        if(!this.submitted){this.submitted=true;submitToGoogleForms(this.selHistory);}
       } else {
         const nm=pairs(newWinners);
-        nm.forEach((pair,i)=>{
-          this.bracketSlots[this.roundNum][i].team1=pair[0];
-          this.bracketSlots[this.roundNum][i].team2=pair[1];
-        });
-        this.matchups=nm;
-        this.matchIdx=0;
-        this.roundWinners=[];
+        nm.forEach((pair,i)=>{this.bracketSlots[this.roundNum][i].team1=pair[0];this.bracketSlots[this.roundNum][i].team2=pair[1];});
+        this.matchups=nm;this.matchIdx=0;this.roundWinners=[];
       }
     }
     this.render();
   }
 
   drawBracket(){
-    const svgW=860,svgH=480;
-    const roundCounts=[16,8,4,2,1];
-    const roundX=[0,172,344,516,672];
-    const roundW=140;
-    const slotH=26;
+    const svgW=860,svgH=480,roundCounts=[16,8,4,2,1],roundX=[0,172,344,516,672],roundW=140,slotH=26;
     const rNames=["R32","R16","QF","SF","Final"];
-
     let out=`<svg viewBox="0 0 ${svgW} ${svgH}" width="100%" xmlns="http://www.w3.org/2000/svg" style="display:block;min-width:500px">`;
-
+    for(let r=0;r<5;r++) out+=`<text x="${roundX[r]+roundW/2}" y="14" text-anchor="middle" font-size="9" font-weight="600" fill="#3a3a5a" font-family="Inter,sans-serif">${rNames[r]}</text>`;
     for(let r=0;r<5;r++){
-      out+=`<text x="${roundX[r]+roundW/2}" y="14" text-anchor="middle" font-size="9" font-weight="600" fill="#3a3a5a" font-family="Inter,sans-serif">${rNames[r]}</text>`;
-    }
-
-    for(let r=0;r<5;r++){
-      const count=roundCounts[r];
-      const spacing=svgH/count;
+      const count=roundCounts[r],spacing=svgH/count;
       for(let m=0;m<count;m++){
-        const slot=this.bracketSlots[r]&&this.bracketSlots[r][m];
-        const cx=roundX[r]+roundW/2;
+        const slot=this.bracketSlots[r]?.[m];
         const cy=22+spacing/2+m*spacing;
         const isActive=!this.champion&&r===this.roundNum&&m===this.matchIdx;
         const isPast=r<this.roundNum||(r===this.roundNum&&m<this.matchIdx);
-
         if(r<4){
-          const nextSpacing=svgH/roundCounts[r+1];
-          const partnerIdx=m%2===0?m+1:m-1;
-          const partnerCy=22+spacing/2+partnerIdx*spacing;
-          const midY=(cy+partnerCy)/2;
-          const nextCy=22+nextSpacing/2+Math.floor(m/2)*nextSpacing;
-          const x1=roundX[r]+roundW+2;
-          const x2=roundX[r+1]-2;
-          out+=`<path d="M${x1} ${cy} L${x1+12} ${cy} L${x1+12} ${midY} L${x2-12} ${midY} L${x2-12} ${nextCy} L${x2} ${nextCy}" fill="none" stroke="#1e1e2a" stroke-width="1"/>`;
+          const ns=svgH/roundCounts[r+1],pi=m%2===0?m+1:m-1;
+          const pcy=22+ns/2*0+spacing/2+pi*spacing,mcy=(cy+(22+spacing/2+pi*spacing))/2,ncy=22+ns/2+Math.floor(m/2)*ns;
+          const x1=roundX[r]+roundW+2,x2=roundX[r+1]-2;
+          out+=`<path d="M${x1} ${cy} L${x1+12} ${cy} L${x1+12} ${mcy} L${x2-12} ${mcy} L${x2-12} ${ncy} L${x2} ${ncy}" fill="none" stroke="#1e1e2a" stroke-width="1"/>`;
         }
-
-        const fillCol=isActive?'#1a1808':isPast?'#0a1a0a':'#12121a';
-        const strokeCol=isActive?'#c8a84b':isPast?'#1a3a1a':'#1e1e2a';
-        const strokeW=isActive?1.5:0.8;
-        out+=`<rect x="${roundX[r]}" y="${cy-slotH/2}" width="${roundW}" height="${slotH}" rx="5" fill="${fillCol}" stroke="${strokeCol}" stroke-width="${strokeW}"/>`;
-
-        if(slot&&slot.winner){
-          const wName=slot.winner.name.substring(0,11);
-          const wCol=isPast?'#3a9a3a':'#c8a84b';
-          out+=`<text x="${roundX[r]+roundW/2}" y="${cy+4}" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="${wCol}" font-weight="500">${wName}</text>`;
+        out+=`<rect x="${roundX[r]}" y="${cy-slotH/2}" width="${roundW}" height="${slotH}" rx="5" fill="${isActive?'#1a1808':isPast?'#0a1a0a':'#12121a'}" stroke="${isActive?'#c8a84b':isPast?'#1a3a1a':'#1e1e2a'}" stroke-width="${isActive?1.5:0.8}"/>`;
+        if(slot?.winner){
+          out+=`<text x="${roundX[r]+roundW/2}" y="${cy+4}" text-anchor="middle" font-size="9" font-family="Inter,sans-serif" fill="${isPast?'#3a9a3a':'#c8a84b'}" font-weight="500">${slot.winner.name.substring(0,11)}</text>`;
         } else if(r===0&&slot){
-          const t1=slot.team1?slot.team1.name.substring(0,8):'TBD';
-          const t2=slot.team2?slot.team2.name.substring(0,8):'TBD';
-          const col=isActive?'#c8a84b':'#555';
-          out+=`<text x="${roundX[r]+6}" y="${cy-4}" font-size="8" font-family="Inter,sans-serif" fill="${col}" font-weight="${isActive?'600':'400'}">${t1}</text>`;
-          out+=`<text x="${roundX[r]+6}" y="${cy+9}" font-size="8" font-family="Inter,sans-serif" fill="${col}" font-weight="${isActive?'600':'400'}">${t2}</text>`;
-        } else if(slot&&slot.team1){
-          const t1=slot.team1.name.substring(0,8);
-          const t2=slot.team2?slot.team2.name.substring(0,8):'TBD';
-          const col=isActive?'#c8a84b':'#555';
-          out+=`<text x="${roundX[r]+6}" y="${cy-4}" font-size="8" font-family="Inter,sans-serif" fill="${col}">${t1}</text>`;
-          out+=`<text x="${roundX[r]+6}" y="${cy+9}" font-size="8" font-family="Inter,sans-serif" fill="${col}">${t2}</text>`;
+          const col=isActive?'#c8a84b':'#555',fw=isActive?'600':'400';
+          out+=`<text x="${roundX[r]+6}" y="${cy-4}" font-size="8" font-family="Inter,sans-serif" fill="${col}" font-weight="${fw}">${(slot.team1?.name||'TBD').substring(0,8)}</text>`;
+          out+=`<text x="${roundX[r]+6}" y="${cy+9}" font-size="8" font-family="Inter,sans-serif" fill="${col}" font-weight="${fw}">${(slot.team2?.name||'TBD').substring(0,8)}</text>`;
+        } else if(slot?.team1){
+          out+=`<text x="${roundX[r]+6}" y="${cy-4}" font-size="8" font-family="Inter,sans-serif" fill="${isActive?'#c8a84b':'#555'}">${slot.team1.name.substring(0,8)}</text>`;
+          out+=`<text x="${roundX[r]+6}" y="${cy+9}" font-size="8" font-family="Inter,sans-serif" fill="${isActive?'#c8a84b':'#555'}">${(slot.team2?.name||'TBD').substring(0,8)}</text>`;
         } else {
           out+=`<text x="${roundX[r]+roundW/2}" y="${cy+4}" text-anchor="middle" font-size="8" font-family="Inter,sans-serif" fill="#2a2a3a">TBD</text>`;
         }
-
         if(isActive){
           out+=`<rect x="${roundX[r]-4}" y="${cy-slotH/2-5}" width="${roundW+8}" height="${slotH+10}" rx="8" fill="none" stroke="#c8a84b" stroke-width="1.5" stroke-dasharray="4 3"/>`;
           out+=`<text x="${roundX[r]+roundW/2}" y="${cy-slotH/2-9}" text-anchor="middle" font-size="7" font-family="Inter,sans-serif" fill="#c8a84b" font-weight="600" letter-spacing="1">PICKING NOW</text>`;
         }
       }
     }
-    out+=`</svg>`;
-    return out;
+    return out+`</svg>`;
   }
 
   render(){
     const app=document.getElementById('app');
     const done=this.history.reduce((s,r)=>s+r.winners.length,0)+this.matchIdx;
-    const total=31;
-    const pct=Math.round(done/total*100);
-
+    const pct=Math.round(done/31*100);
     if(this.champion){
       app.innerHTML=`
         <div class="hdr"><h1>NFL HELMET <span>BRACKET</span></h1><span class="round-badge">Champion!</span></div>
@@ -252,29 +209,23 @@ class BracketApp{
         <div class="main">
           <div class="winner-screen">
             <div class="winner-title">🏆 Your Champion 🏆</div>
-            <div class="winner-helmet">${this.champion.e}</div>
+            ${helmetImg(this.champion,160)}
             <div class="winner-name">${this.champion.name}</div>
-            <div style="color:#444;font-size:.75rem;margin-top:-.5rem">${this.champion.conf}</div>
-            <p style="color:#555;font-size:.75rem;max-width:320px;line-height:1.6;margin-top:.5rem">Your picks have been recorded. Share this page with friends to see who they pick!</p>
+            <div style="color:#444;font-size:.75rem;margin-top:-.4rem">${this.champion.conf}</div>
+            <p style="color:#555;font-size:.75rem;max-width:320px;line-height:1.6;margin-top:.5rem">Your picks have been recorded. Share this page with friends!</p>
             <button class="restart-btn" onclick="window.bracketApp.reset()">Play Again</button>
           </div>
-          <div class="bracket-section">
-            <div class="bracket-label">Your Final Bracket</div>
-            ${this.drawBracket()}
-          </div>
+          <div class="bracket-section"><div class="bracket-label">Your Final Bracket</div>${this.drawBracket()}</div>
           <div class="history-section">
             <div class="history-title">Round by Round</div>
-            ${this.history.map(r=>`<div class="history-round"><div class="hr-label">${r.name}</div><div class="hr-teams">${r.winners.map(w=>`<span class="hr-team">${w.e} ${w.name}</span>`).join('')}</div></div>`).join('')}
+            ${this.history.map(r=>`<div class="history-round"><div class="hr-label">${r.name}</div><div class="hr-teams">${r.winners.map(w=>`<span class="hr-team">${w.name}</span>`).join('')}</div></div>`).join('')}
           </div>
         </div>
         <footer>NFL Helmet Bracket Challenge · Results recorded</footer>`;
       return;
     }
-
-    const match=this.matchups[this.matchIdx];
-    const [t1,t2]=match;
+    const [t1,t2]=this.matchups[this.matchIdx];
     const rName=ROUND_NAMES[Math.min(this.roundNum,4)];
-
     app.innerHTML=`
       <div class="hdr"><h1>NFL HELMET <span>BRACKET</span></h1><span class="round-badge">${rName}</span></div>
       <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
@@ -282,32 +233,21 @@ class BracketApp{
         <div class="matchup-label">Match ${this.matchIdx+1} of ${this.matchups.length} · Click to pick the winner</div>
         <div class="matchup">
           <div class="team-card" onclick="window.bracketApp.pick(0)">
-            <div class="helmet-emoji">${t1.e}</div>
+            ${helmetImg(t1)}
             <div class="team-name">${t1.name}</div>
             <div class="team-conf">${t1.conf}</div>
           </div>
-          <div class="vs-divider">
-            <div class="bye-line"></div>
-            <div class="vs-text">VS</div>
-            <div class="bye-line"></div>
-          </div>
+          <div class="vs-divider"><div class="bye-line"></div><div class="vs-text">VS</div><div class="bye-line"></div></div>
           <div class="team-card" onclick="window.bracketApp.pick(1)">
-            <div class="helmet-emoji">${t2.e}</div>
+            ${helmetImg(t2)}
             <div class="team-name">${t2.name}</div>
             <div class="team-conf">${t2.conf}</div>
           </div>
         </div>
-        <div class="bracket-section">
-          <div class="bracket-label">${rName} · Match ${this.matchIdx+1} of ${this.matchups.length}</div>
-          ${this.drawBracket()}
-        </div>
-        ${this.history.length>0?`
-        <div class="history-section" style="margin-top:1rem">
-          <div class="history-title">Completed Rounds</div>
-          ${this.history.map(r=>`<div class="history-round"><div class="hr-label">${r.name}</div><div class="hr-teams">${r.winners.map(w=>`<span class="hr-team">${w.e} ${w.name}</span>`).join('')}</div></div>`).join('')}
-        </div>`:''}
+        <div class="bracket-section"><div class="bracket-label">${rName} · Match ${this.matchIdx+1} of ${this.matchups.length}</div>${this.drawBracket()}</div>
+        ${this.history.length>0?`<div class="history-section" style="margin-top:1rem"><div class="history-title">Completed Rounds</div>${this.history.map(r=>`<div class="history-round"><div class="hr-label">${r.name}</div><div class="hr-teams">${r.winners.map(w=>`<span class="hr-team">${w.name}</span>`).join('')}</div></div>`).join('')}</div>`:''}
       </div>
-      <footer>Match ${done+1} of ${total} · ${100-pct}% remaining</footer>`;
+      <footer>Match ${done+1} of 31 · ${100-pct}% remaining</footer>`;
   }
 }
 
